@@ -2,72 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hashtag Copier</title>
+  <title>📋 Hashtag Copier</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #121212;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 50px;
+      color: white;
+      text-align: center;
+      padding: 30px;
     }
     h1 {
       margin-bottom: 20px;
     }
     button {
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
       background-color: #1f1f1f;
-      color: #fff;
-      transition: background-color 0.3s ease;
+      color: #00ffcc;
+      padding: 12px 24px;
+      margin: 10px;
+      border: 1px solid #00ffcc;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
     }
     button:hover {
-      background-color: #444;
+      background-color: #00ffcc;
+      color: #1f1f1f;
     }
   </style>
 </head>
 <body>
   <h1>📋 Hashtag Copier</h1>
   <div id="buttons"></div>
-  
+
   <script>
     const hashtags = {
-      "Monday 1": "#EastCoastVibes #NYCStyle #BaddieEnergy #InstaModel #OnlyFansBabe #USAGirls #DailyInspo #SlayAllDay #ViralReels #GlowUp",
-      "Monday 2": "#NYCStyle #OnlyFansBabe #ViralReels #BaddieEnergy #GlowUp #SlayAllDay #EastCoastVibes #DailyInspo #USAGirls #InstaModel",
-      "Tuesday 1": "#MiamiHeat #BossBabeVibes #USABaddies #InstaFashion #CurvyAndConfident #SlayTheGram #ReelItIn #AmericanBeauty #ThirstTrapQueen #ModelMood",
-      "Tuesday 2": "#USABaddies #CurvyAndConfident #ModelMood #ThirstTrapQueen #ReelItIn #BossBabeVibes #AmericanBeauty #MiamiHeat #SlayTheGram #InstaFashion",
-      "Wednesday 1": "#EastCoastGlow #NYCBaddie #HotGirlVibes #IGModelSearch #USAExplorePage #FitAndFine #ViralBabe #ContentQueen #SunkissedVibes #OnlyFansLife",
-      "Wednesday 2": "#FitAndFine #ViralBabe #OnlyFansLife #ContentQueen #USAExplorePage #HotGirlVibes #EastCoastGlow #SunkissedVibes #IGModelSearch #NYCBaddie",
-      "Thursday 1": "#BaddieOfTheDay #EastCoastModel #GlamVibesOnly #InstaGlowUp #ExploreUSA #FlawlessFeed #SpicyContent #SassyAndStylish #ReelGoals #USAttraction",
-      "Thursday 2": "#ExploreUSA #InstaGlowUp #SassyAndStylish #GlamVibesOnly #SpicyContent #USAttraction #ReelGoals #EastCoastModel #BaddieOfTheDay #FlawlessFeed",
-      "Friday 1": "#NewYorkMinute #IGGoddess #ModelVibes #HotBabeEnergy #ContentCreationQueen #ReelReady #BaddieAlert #GlowModeOn #OnlyFansExclusive #AmericanDreamGirl",
-      "Friday 2": "#NewYorkMinute #ModelVibes #OnlyFansExclusive #AmericanDreamGirl #IGGoddess #BaddieAlert #ContentCreationQueen #GlowModeOn #HotBabeEnergy #ReelReady",
-      "Saturday 1": "#SlayDaily #EastCoastFeels #USABaddieVibes #FierceAndFlawless #ViralWithStyle #GlamReels #HotAndConfident #InstaChic #CurvyGoddess #ExploreTheGram",
-      "Saturday 2": "#FierceAndFlawless #HotAndConfident #EastCoastFeels #USABaddieVibes #ExploreTheGram #CurvyGoddess #InstaChic #ViralWithStyle #SlayDaily #GlamReels",
-      "Sunday 1": "#BaddieVibesOnly #NYCInspo #GlowQueen #USABabeEnergy #InstaItGirl #SeducingTheFeed #ModelOnAMission #ViralAndThriving #DailySlayMode #EastCoastMagic",
-      "Sunday 2": "#ModelOnAMission #SeducingTheFeed #NYCInspo #ViralAndThriving #USABabeEnergy #BaddieVibesOnly #DailySlayMode #EastCoastMagic #GlowQueen #InstaItGirl",
+      "Monday 1": "#hashtag1 #hashtag2 #hashtag3",
+      "Monday 2": "#hashtag4 #hashtag5 #hashtag6",
+      "Tuesday 1": "#hashtag7 #hashtag8 #hashtag9",
+      "Tuesday 2": "#hashtag10 #hashtag11 #hashtag12",
+      "Wednesday 1": "#hashtag13 #hashtag14 #hashtag15",
+      "Wednesday 2": "#hashtag16 #hashtag17 #hashtag18",
+      "Thursday 1": "#hashtag19 #hashtag20 #hashtag21",
+      "Thursday 2": "#hashtag22 #hashtag23 #hashtag24",
+      "Friday 1": "#hashtag25 #hashtag26 #hashtag27",
+      "Friday 2": "#hashtag28 #hashtag29 #hashtag30",
+      "Saturday 1": "#hashtag31 #hashtag32 #hashtag33",
+      "Saturday 2": "#hashtag34 #hashtag35 #hashtag36",
+      "Sunday 1": "#hashtag37 #hashtag38 #hashtag39",
+      "Sunday 2": "#hashtag40 #hashtag41 #hashtag42"
     };
 
-    function copyHashtags(key) {
-      const text = hashtags[key];
-      navigator.clipboard.writeText(text).then(() => {
-        alert(`${key} copied to clipboard!`);
-      }, () => {
-        alert('❌ Failed to copy hashtags.');
-      });
-    }
+    const container = document.getElementById("buttons");
 
-    for (const key in hashtags) {
-      const btn = document.createElement('button');
-      btn.innerText = key;
-      btn.onclick = () => copyHashtags(key);
-      document.getElementById('buttons').appendChild(btn);
+    for (const label in hashtags) {
+      const btn = document.createElement("button");
+      btn.textContent = label;
+      btn.onclick = () => {
+        navigator.clipboard.writeText(hashtags[label]).then(() => {
+          alert(`Copied ${label} hashtags to clipboard!`);
+        });
+      };
+      container.appendChild(btn);
     }
   </script>
 </body>
