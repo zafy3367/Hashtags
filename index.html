@@ -43,9 +43,10 @@
     }
 
     h1 {
-      margin: 100px 0 0;
-      font-weight: 600;
-      letter-spacing: 1px;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
     }
 
     #buttons {
@@ -82,14 +83,12 @@
     }
 
     .toggle {
-  align-self: flex-end;
-  margin-top: 20px;
-  margin-right: 20px;
   background-color: var(--gold);
   padding: 8px 16px;
   border-radius: 20px;
   font-weight: bold;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  margin-bottom: 30px; /* ⬅️ same as gap between title + first button */
     }
 
    .toggle input {
@@ -98,21 +97,16 @@
 
 .toggle label {
   cursor: pointer;
-  background-color: var(--gold);
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   color: #000;
-}
+
+.dark-mode .toggle {
+  background-color: #333;
 
 .dark-mode .toggle label {
-  background-color: #333;
   color: var(--gold);
-    }
 
 .content {
-  margin-top: 100px; /* pushes content below the fixed toggle */
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
