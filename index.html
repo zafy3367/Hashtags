@@ -2,22 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hashtag Copier</title>
+  <title>VIP Vault Hashtag Copier</title>
   <style>
+    :root {
+      --bg-light: #D2B48C;
+      --text-light: #000000;
+      --bg-dark: #1a1a1a;
+      --text-dark: #f5f5f5;
+      --gold: #cfa548;
+      --accent: #ad3493;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background-color: #D2B48C;
-      color: #000000;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
       gap: 30px;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    body.dark-mode {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
     }
 
     h1 {
       margin: 0;
+      font-weight: 600;
+      letter-spacing: 1px;
     }
 
     #buttons {
@@ -28,26 +47,63 @@
     }
 
     button {
-      width: 160px;
+      width: 180px;
       height: 50px;
       font-size: 16px;
-      background-color: #ad3493;
-      color: #000000;
+      background-color: var(--gold);
+      color: #000;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      font-weight: bold;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     button:hover {
+      background-color: #e2c675;
+    }
+
+    .dark-mode button {
+      background-color: #333;
+      color: var(--gold);
+    }
+
+    .dark-mode button:hover {
       background-color: #444;
-      color: white;
+    }
+
+    .toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+    }
+
+    .toggle input {
+      display: none;
+    }
+
+    .toggle label {
+      cursor: pointer;
+      background-color: var(--gold);
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .dark-mode .toggle label {
+      background-color: #333;
+      color: var(--gold);
     }
   </style>
 </head>
 <body>
 
-  <h1>Hashtag Copier</h1>
+  <div class="toggle">
+    <label for="darkModeSwitch">🌙 Toggle Dark Mode</label>
+    <input type="checkbox" id="darkModeSwitch">
+  </div>
+
+  <h1>VIP Vault Hashtag Copier</h1>
   <div id="buttons"></div>
 
   <script>
@@ -81,6 +137,12 @@
       btn.onclick = () => copyHashtags(key);
       document.getElementById('buttons').appendChild(btn);
     }
+
+    // Dark mode toggle
+    const toggle = document.getElementById('darkModeSwitch');
+    toggle.addEventListener('change', () => {
+      document.body.classList.toggle('dark-mode');
+    });
   </script>
 </body>
 </html>
