@@ -2,42 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hashtag Copy Tool</title>
+  <title>Hashtag Copier</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #eee;
-      padding: 20px;
+      background-color: #121212;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
     }
     h1 {
-      color: #f5a623;
+      margin-bottom: 20px;
     }
     button {
-      margin: 5px 0;
+      margin: 10px;
       padding: 10px 20px;
       font-size: 16px;
-      background-color: #222;
-      color: #f5a623;
-      border: 1px solid #555;
       border-radius: 5px;
+      border: none;
       cursor: pointer;
+      background-color: #ad3493;
+      color: #fff;
+      transition: background-color 0.3s ease;
     }
     button:hover {
-      background-color: #333;
-    }
-    textarea {
-      display: none;
+      background-color: #444;
     }
   </style>
 </head>
 <body>
-
-  <h1>📋 Hashtag Copy Tool</h1>
-
+  <h1>📋 Hashtag Copier</h1>
   <div id="buttons"></div>
-
-  <textarea id="copyArea"></textarea>
 
   <script>
     const hashtags = {
@@ -54,24 +51,22 @@
       "Saturday 1": "#SlayDaily #EastCoastFeels #USABaddieVibes #FierceAndFlawless #ViralWithStyle #GlamReels #HotAndConfident #InstaChic #CurvyGoddess #ExploreTheGram",
       "Saturday 2": "#FierceAndFlawless #HotAndConfident #EastCoastFeels #USABaddieVibes #ExploreTheGram #CurvyGoddess #InstaChic #ViralWithStyle #SlayDaily #GlamReels",
       "Sunday 1": "#BaddieVibesOnly #NYCInspo #GlowQueen #USABabeEnergy #InstaItGirl #SeducingTheFeed #ModelOnAMission #ViralAndThriving #DailySlayMode #EastCoastMagic",
-      "Sunday 2": "#ModelOnAMission #SeducingTheFeed #NYCInspo #ViralAndThriving #USABabeEnergy #BaddieVibesOnly #DailySlayMode #EastCoastMagic #GlowQueen #InstaItGirl",
+      "Sunday 2": "#ModelOnAMission #SeducingTheFeed #NYCInspo #ViralAndThriving #USABabeEnergy #BaddieVibesOnly #DailySlayMode #EastCoastMagic #GlowQueen #InstaItGirl"
     };
 
-    const buttonsDiv = document.getElementById("buttons");
-    const copyArea = document.getElementById("copyArea");
+    function copyHashtags(key) {
+      const text = hashtags[key];
+      navigator.clipboard.writeText(text).catch(() => {
+        console.error('❌ Failed to copy hashtags.');
+      });
+    }
 
-    for (const [label, text] of Object.entries(hashtags)) {
-      const button = document.createElement("button");
-      button.textContent = label;
-      button.onclick = () => {
-        copyArea.value = text;
-        copyArea.select();
-        document.execCommand("copy");
-        alert(`Copied hashtags for ${label}!`);
-      };
-      buttonsDiv.appendChild(button);
+    for (const key in hashtags) {
+      const btn = document.createElement('button');
+      btn.innerText = key;
+      btn.onclick = () => copyHashtags(key);
+      document.getElementById('buttons').appendChild(btn);
     }
   </script>
-
 </body>
 </html>
