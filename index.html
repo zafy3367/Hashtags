@@ -51,6 +51,7 @@
 
     #buttons {
       margin-top: 40px;
+      margin-bottom: 40px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -120,8 +121,8 @@
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--gold);
-  color: #000;
+  background-color: #1a1a1a;     /* Sleek dark background */
+  color: var(--gold);            /* Signature VIP gold text */
   padding: 10px 20px;
   border-radius: 25px;
   font-weight: bold;
@@ -130,6 +131,7 @@
   pointer-events: none;
   transition: opacity 0.3s ease;
   z-index: 999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* adds premium depth */
 }
 
 .copy-confirmation.show {
