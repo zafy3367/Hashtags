@@ -82,10 +82,9 @@
     }
 
     .toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 999; /* 🛡️ makes sure it's always on top */
+  align-self: flex-end;
+  margin-top: 20px;
+  margin-right: 20px;
   background-color: var(--gold);
   padding: 8px 16px;
   border-radius: 20px;
@@ -122,13 +121,13 @@
   </style>
 </head>
 <body>
-
-  <div class="toggle">
-  <input type="checkbox" id="darkModeSwitch">
-  <label for="darkModeSwitch">🌙 Toggle Dark Mode</label>
-</div>
-
+  
 <div class="content">
+  <div class="toggle">
+    <input type="checkbox" id="darkModeSwitch">
+    <label for="darkModeSwitch">🌙 Toggle Dark Mode</label>
+  </div>
+
   <h1>VIP Vault Hashtag Copier</h1>
   <div id="buttons"></div>
 </div>
