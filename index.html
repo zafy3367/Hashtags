@@ -115,9 +115,30 @@
   align-items: center;
   gap: 30px;
 }
+.copy-confirmation {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--gold);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 999;
+}
+
+.copy-confirmation.show {
+  opacity: 1;
+}
   </style>
 </head>
-<body>
+</body>
+
   
 <div class="content">
   <div class="toggle">
@@ -128,6 +149,8 @@
   <h1>VIP Vault Hashtag Copier</h1>
   <div id="buttons"></div>
 </div>
+
+   <div id="copy-confirmation" class="copy-confirmation">Copied ✅</div>
 
   <script>
     const hashtags = {
@@ -149,7 +172,13 @@
 
     function copyHashtags(key) {
       const text = hashtags[key];
-      navigator.clipboard.writeText(text).catch(() => {
+      navigator.clipboard.writeText(text).then(() => {
+        const confirmation = document.getElementById('copy-confirmation');
+        confirmation.classList.add('show');
+        setTimeout(() => {
+          confirmation.classList.remove('show');
+        }, 1000);
+      }).catch(() => {
         console.error('❌ Failed to copy hashtags.');
       });
     }
