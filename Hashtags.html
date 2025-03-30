@@ -34,7 +34,8 @@
 </head>
 <body>
   <h1>📋 Hashtag Copier</h1>
-
+  <div id="buttons"></div>
+  
   <script>
     const hashtags = {
       "Monday 1": "#EastCoastVibes #NYCStyle #BaddieEnergy #InstaModel #OnlyFansBabe #USAGirls #DailyInspo #SlayAllDay #ViralReels #GlowUp",
@@ -66,7 +67,7 @@
       const btn = document.createElement('button');
       btn.innerText = key;
       btn.onclick = () => copyHashtags(key);
-      document.body.appendChild(btn);
+      document.getElementById('buttons').appendChild(btn);
     }
   </script>
 </body>
