@@ -93,30 +93,32 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     }
 
-    .toggle input {
-      display: none;
-    }
+   .toggle input {
+  display: none;
+}
 
-    .toggle label {
-      cursor: pointer;
-      background-color: var(--gold);
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-weight: bold;
-    }
+.toggle label {
+  cursor: pointer;
+  background-color: var(--gold);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  color: #000;
+}
 
-    .dark-mode .toggle label {
-      background-color: #333;
-      color: var(--gold);
+.dark-mode .toggle label {
+  background-color: #333;
+  color: var(--gold);
     }
   </style>
 </head>
 <body>
 
-  <div class="toggle">
-    <label for="darkModeSwitch">🌙 Toggle Dark Mode</label>
-    <input type="checkbox" id="darkModeSwitch">
-  </div>
+  <<div class="toggle">
+  <input type="checkbox" id="darkModeSwitch">
+  <label for="darkModeSwitch">🌙 Toggle Dark Mode</label>
+</div>
 
   <h1>VIP Vault Hashtag Copier</h1>
   <div id="buttons"></div>
