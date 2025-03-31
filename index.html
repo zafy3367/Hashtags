@@ -3,9 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <title>VIP Hashtag Copier</title>
+<style>
+  :root {
+    --bg-light: #f5f5f5;
+    --text-light: #1a1a1a;
+    --bg-dark: #1a1a1a;
+    --text-dark: #f5f5f5;
+    --gold: #cfa548;
+    --accent: #ad3493;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body.dark-mode {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+  }
+
+  #button-container {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  button {
+    width: 180px;
+    height: 50px;
+    font-size: 16px;
+    background-color: var(--gold);
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #e2c675;
+  }
+
+  .dark-mode button {
+    background-color: #333;
+    color: var(--gold);
+  }
+
+  .dark-mode button:hover {
+    background-color: #444;
+  }
+
+  .copy-confirmation {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1a1a1a;
+    color: var(--gold);
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  .dark-mode .copy-confirmation {
+    background-color: var(--gold);
+    color: #000;
+  }
+
+  .copy-confirmation.show {
+    opacity: 1;
+  }
+</style>
+
+
 </head>
 <body>
-
+  
+<h1>VIP Vault Hashtag Copier</h1>
   <!-- Buttons go here -->
   <div id="button-container"></div>
 
