@@ -1,39 +1,58 @@
-<script>
-  const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSIuRTn83dsU6mrRKryupDMXXgV7fkOKncvgrRyO3Pzqoon3OgAHaA7xL7tb7t3LpFCoFcMzmSAIxB9/pub?output=csv";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VIP Hashtag Copier</title>
+</head>
+<body>
 
-  fetch(sheetURL)
-    .then(response => response.text())
-    .then(data => {
-      const rows = data.trim().split(/\r?\n/).slice(1); // support linebreak variations
-      rows.forEach(row => {
-        const [label, ...rest] = row.split(',');
-        if (!label || rest.length === 0) return;
+  <!-- Buttons go here -->
+  <div id="button-container"></div>
 
-        const hashtags = rest.join(',').replace(/"/g, '').trim();
+  <!-- Copy confirmation -->
+  <div id="copy-confirmation" class="copy-confirmation">Copied!</div>
 
+  <!-- Dark mode toggle (optional) -->
+  <input type="checkbox" id="darkModeSwitch" />
 
-        const btn = document.createElement('button');
-        btn.innerText = label.trim();
-        btn.onclick = () => copyHashtags(hashtags);
-        document.getElementById('button-container').appendChild(btn);
+  <script>
+    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSIuRTn83dsU6mrRKryupDMXXgV7fkOKncvgrRyO3Pzqoon3OgAHaA7xL7tb7t3LpFCoFcMzmSAIxB9/pub?output=csv";
+
+    fetch(sheetURL)
+      .then(response => response.text())
+      .then(data => {
+        const rows = data.trim().split(/\r?\n/).slice(1);
+        rows.forEach(row => {
+          const [label, ...rest] = row.split(',');
+          if (!label || rest.length === 0) return;
+
+          const hashtags = rest.join(',').replace(/"/g, '').trim();
+
+          const btn = document.createElement('button');
+          btn.innerText = label.trim();
+          btn.onclick = () => copyHashtags(hashtags);
+          document.getElementById('button-container').appendChild(btn);
+        });
+      })
+      .catch(err => {
+        console.error("Failed to load CSV:", err);
       });
-    })
-    .catch(err => {
-      console.error("Failed to load CSV:", err);
-    });
 
-  function copyHashtags(text) {
-    navigator.clipboard.writeText(text).then(() => {
-      const confirmation = document.getElementById('copy-confirmation');
-      confirmation.classList.add('show');
-      setTimeout(() => confirmation.classList.remove('show'), 1000);
-    }).catch(() => {
-      console.error('❌ Failed to copy hashtags.');
-    });
-  }
+    function copyHashtags(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const confirmation = document.getElementById('copy-confirmation');
+        confirmation.classList.add('show');
+        setTimeout(() => confirmation.classList.remove('show'), 1000);
+      }).catch(() => {
+        console.error('❌ Failed to copy hashtags.');
+      });
+    }
 
-  const toggle = document.getElementById('darkModeSwitch');
-  toggle.addEventListener('change', () => {
-    document.body.classList.toggle('dark-mode');
-  });
-</script>
+    const toggle = document.getElementById('darkModeSwitch');
+    toggle.addEventListener('change', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+  </script>
+
+</body>
+</html>
