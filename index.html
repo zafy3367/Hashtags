@@ -51,7 +51,16 @@
 .dark-mode .toggle label {
   color: var(--gold);
 }
+.row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+  justify-content: center;
+}
 
+.row button {
+  width: 180px;
+}
   body.dark-mode {
     background-color: var(--bg-dark);
     color: var(--text-dark);
@@ -145,16 +154,30 @@
       .then(data => {
         const rows = data.trim().split(/\r?\n/).slice(1);
         rows.forEach(row => {
-          const [label, ...rest] = row.split(',');
-          if (!label || rest.length === 0) return;
+          const cols = row.split(',');
+  if (cols.length < 4) return;
 
-          const hashtags = rest.join(',').replace(/"/g, '').trim();
+  const label1 = cols[0].trim();
+  const hashtags1 = cols[1].trim();
+  const label2 = cols[2].trim();
+  const hashtags2 = cols[3].trim();
 
-          const btn = document.createElement('button');
-          btn.innerText = label.trim();
-          btn.onclick = () => copyHashtags(hashtags);
-          document.getElementById('button-container').appendChild(btn);
-        });
+  const rowDiv = document.createElement('div');
+  rowDiv.className = 'row';
+
+  const btn1 = document.createElement('button');
+  btn1.innerText = label1;
+  btn1.onclick = () => copyHashtags(hashtags1);
+
+  const btn2 = document.createElement('button');
+  btn2.innerText = label2;
+  btn2.onclick = () => copyHashtags(hashtags2);
+
+  rowDiv.appendChild(btn1);
+  rowDiv.appendChild(btn2);
+
+  document.getElementById('button-container').appendChild(rowDiv);
+});
       })
       .catch(err => {
         console.error("Failed to load CSV:", err);
