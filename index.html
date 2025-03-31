@@ -14,7 +14,7 @@
         const btn = document.createElement('button');
         btn.innerText = label.trim();
         btn.onclick = () => copyHashtags(hashtags);
-        document.getElementById('buttons').appendChild(btn);
+        document.getElementById('button-container').appendChild(btn);
       });
     })
     .catch(err => {
