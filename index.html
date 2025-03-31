@@ -3,210 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <title>VIP Hashtag Copier</title>
-
-  <!-- iOS Web App Support -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="VIP Vault">
-<link rel="apple-touch-icon" href="icon.jpg">
-
-<style>
-  :root {
-    --bg-light: #f5f5f5;
-    --text-light: #1a1a1a;
-    --bg-dark: #1a1a1a;
-    --text-dark: #f5f5f5;
-    --gold: #cfa548;
-    --accent: #ad3493;
-  }
-
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    background-color: var(--bg-light);
-    color: var(--text-light);
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-.toggle {
-  background-color: var(--gold);
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  margin-top: -10px;
-  margin-bottom: 10px;
-}
-.toggle input {
-  display: none;
-}
-.toggle label {
-  cursor: pointer;
-  color: #000;
-  display: block;
-  text-align: center;
-}
-.dark-mode .toggle {
-  background-color: #333;
-}
-.dark-mode .toggle label {
-  color: var(--gold);
-}
-.row {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 10px;
-  justify-content: center;
-}
-
-.row button {
-  width: 180px;
-}
-  body.dark-mode {
-    background-color: var(--bg-dark);
-    color: var(--text-dark);
-  }
-
-  #button-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-top: 30px;
-}
-
-  button {
-    width: 180px;
-    height: 50px;
-    font-size: 16px;
-    background-color: var(--gold);
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  button:hover {
-    background-color: #e2c675;
-  }
-
-  .dark-mode button {
-    background-color: #333;
-    color: var(--gold);
-  }
-
-  .dark-mode button:hover {
-    background-color: #444;
-  }
-
-  .copy-confirmation {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #1a1a1a;
-    color: var(--gold);
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: bold;
-    font-size: 14px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    z-index: 999;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  }
-
-  .dark-mode .copy-confirmation {
-    background-color: var(--gold);
-    color: #000;
-  }
-
-  .copy-confirmation.show {
-    opacity: 1;
-  }
-</style>
-
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="VIP Vault">
+  <link rel="apple-touch-icon" href="icon.jpg">
+  <style>
+    :root {
+      --bg-light: #f5f5f5;
+      --text-light: #1a1a1a;
+      --bg-dark: #1a1a1a;
+      --text-dark: #f5f5f5;
+      --gold: #cfa548;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    body.dark-mode {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    h1 {
+      text-align: center;
+    }
+    .toggle {
+      background-color: var(--gold);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      margin: 20px auto;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      width: fit-content;
+    }
+    .toggle input {
+      display: none;
+    }
+    .toggle label {
+      cursor: pointer;
+      color: #000;
+      display: block;
+      text-align: center;
+    }
+    .dark-mode .toggle {
+      background-color: #333;
+    }
+    .dark-mode .toggle label {
+      color: var(--gold);
+    }
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    button {
+      width: 180px;
+      height: 50px;
+      font-size: 16px;
+      background-color: var(--gold);
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #e2c675;
+    }
+    .dark-mode button {
+      background-color: #333;
+      color: var(--gold);
+    }
+    .dark-mode button:hover {
+      background-color: #444;
+    }
+    .copy-confirmation {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1a1a1a;
+      color: var(--gold);
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 999;
+    }
+    .dark-mode .copy-confirmation {
+      background-color: var(--gold);
+      color: #000;
+    }
+    .copy-confirmation.show {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
-  
-<h1>VIP Vault Hashtag Copier</h1>
-  <!-- Buttons go here -->
+  <h1>VIP Vault Hashtag Copier</h1>
   <div id="button-container"></div>
-
-  <!-- Copy confirmation -->
   <div id="copy-confirmation" class="copy-confirmation">Copied!</div>
-
-  <!-- Dark mode toggle (optional) -->
   <div class="toggle">
-  <input type="checkbox" id="darkModeSwitch">
-  <label for="darkModeSwitch">🌙 Toggle Dark Mode</label>
-</div>
-
+    <input type="checkbox" id="darkModeSwitch">
+    <label for="darkModeSwitch">🌙 Toggle Dark Mode</label>
+  </div>
   <script>
-  const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSIuRTn83dsU6mrRKryupDMXXgV7fkOKncvgrRyO3Pzqoon3OgAHaA7xL7tb7t3LpFCoFcMzmSAIxB9/pub?output=csv";
+    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSIuRTn83dsU6mrRKryupDMXXgV7fkOKncvgrRyO3Pzqoon3OgAHaA7xL7tb7t3LpFCoFcMzmSAIxB9/pub?output=csv";
 
-  fetch(sheetURL)
-  .then(response => response.text())
-  .then(data => {
-    const rows = data.trim().split(/\r?\n/).slice(1); // Skip header
+    fetch(sheetURL)
+      .then(res => res.text())
+      .then(data => {
+        const rows = data.trim().split(/\r?\n/).slice(1);
+        const colA = [], colB = [];
 
-    for (let i = 0; i < rows.length; i += 2) {
-      const rowDiv = document.createElement('div');
-      rowDiv.className = 'row';
+        rows.forEach((row, i) => {
+          const [label, hashtags] = row.split(/,(.+)/);
+          if (!label || !hashtags) return;
 
-      // Left column
-      const [label1, hashtags1] = rows[i].split(/,(.+)/);
-      if (label1 && hashtags1) {
-        const btn1 = document.createElement('button');
-        btn1.innerText = label1.trim();
-        btn1.onclick = () => copyHashtags(hashtags1.trim());
-        rowDiv.appendChild(btn1);
-      }
+          const btn = document.createElement('button');
+          btn.textContent = label.trim();
+          btn.onclick = () => copyHashtags(hashtags.trim());
 
-      // Right column (only if it exists)
-      if (rows[i + 1]) {
-        const [label2, hashtags2] = rows[i + 1].split(/,(.+)/);
-        if (label2 && hashtags2) {
-          const btn2 = document.createElement('button');
-          btn2.innerText = label2.trim();
-          btn2.onclick = () => copyHashtags(hashtags2.trim());
-          rowDiv.appendChild(btn2);
+          if (i < 7) colA.push(btn);
+          else colB.push(btn);
+        });
+
+        for (let i = 0; i < Math.max(colA.length, colB.length); i++) {
+          const rowDiv = document.createElement('div');
+          rowDiv.className = 'row';
+          if (colA[i]) rowDiv.appendChild(colA[i]);
+          if (colB[i]) rowDiv.appendChild(colB[i]);
+          document.getElementById('button-container').appendChild(rowDiv);
         }
-      }
+      })
+      .catch(err => console.error('CSV load failed', err));
 
-      document.getElementById('button-container').appendChild(rowDiv);
+    function copyHashtags(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const confirm = document.getElementById('copy-confirmation');
+        confirm.classList.add('show');
+        setTimeout(() => confirm.classList.remove('show'), 1000);
+      }).catch(() => console.error('❌ Copy failed.'));
     }
-  })
-  .catch(err => {
-    console.error("Failed to load CSV:", err);
-  });
 
-  function copyHashtags(text) {
-    navigator.clipboard.writeText(text).then(() => {
-      const confirmation = document.getElementById('copy-confirmation');
-      confirmation.classList.add('show');
-      setTimeout(() => confirmation.classList.remove('show'), 1000);
-    }).catch(() => {
-      console.error('❌ Failed to copy hashtags.');
+    document.getElementById('darkModeSwitch').addEventListener('change', () => {
+      document.body.classList.toggle('dark-mode');
     });
-  }
-
-  const toggle = document.getElementById('darkModeSwitch');
-  toggle.addEventListener('change', () => {
-    document.body.classList.toggle('dark-mode');
-  });
-</script>
-
-
+  </script>
 </body>
 </html>
