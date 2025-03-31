@@ -7,7 +7,7 @@
     .then(data => {
       const rows = data.split('\n').slice(1); // skip header
       rows.forEach(row => {
-        const [buttonLabel, hashtags] = row.split(','); // assumes CSV = name, hashtags
+        const [buttonLabel, hashtags] = row.split(/,(.+)/); // split only after first comma
         if (!buttonLabel || !hashtags) return;
 
         const btn = document.createElement('button');
