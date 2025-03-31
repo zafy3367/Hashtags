@@ -1,206 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>VIP Vault Hashtag Copier</title>
+<script>
+  const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSIuRTn83dsU6mrRKryupDMXXgV7fkOKncvgrRyO3Pzqoon3OgAHaA7xL7tb7t3LpFCoFcMzmSAIxB9/pub?output=csv";
 
-  <!-- iOS web app behavior -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="VIP Vault">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  // Fetch CSV data and create buttons
+  fetch(sheetURL)
+    .then(response => response.text())
+    .then(data => {
+      const rows = data.split('\n').slice(1); // skip header
+      rows.forEach(row => {
+        const [buttonLabel, hashtags] = row.split(','); // assumes CSV = name, hashtags
+        if (!buttonLabel || !hashtags) return;
 
-  <link rel="apple-touch-icon" href="icon.jpg">
-  
-  <style>
-    :root {
-  --bg-light: #f5f5f5;         /* new light background */
-  --text-light: #1a1a1a;       /* rich dark gray */
-  --bg-dark: #1a1a1a;
-  --text-dark: #f5f5f5;
-  --gold: #cfa548;
-  --accent: #ad3493;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 30px;
-      background-color: var(--bg-light);
-      color: var(--text-light);
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    body.dark-mode {
-      background-color: var(--bg-dark);
-      color: var(--text-dark);
-    }
-
-    h1 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: 1px;
-    }
-
-    #buttons {
-      margin-top: 40px;
-      margin-bottom: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-    }
-
-    button {
-      width: 180px;
-      height: 50px;
-      font-size: 16px;
-      background-color: var(--gold);
-      color: #000;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #e2c675;
-    }
-
-    .dark-mode button {
-      background-color: #333;
-      color: var(--gold);
-    }
-
-    .dark-mode button:hover {
-      background-color: #444;
-    }
-
-    .toggle {
-  background-color: var(--gold);
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  margin-bottom: 30px; /* ⬅️ same as gap between title + first button */
-    }
-
-   .toggle input {
-  display: none;
-}
-
-.toggle label {
-  cursor: pointer;
-  color: #000;
-  display: block;
-  text-align: center;
-}
-.dark-mode .toggle {
-  background-color: #333;
-}
-.dark-mode .toggle label {
-  color: var(--gold);
-}
-.content {
-  margin-top: 60px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-}
-.copy-confirmation {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #1a1a1a;     /* Sleek dark background */
-  color: var(--gold);            /* Signature VIP gold text */
-  padding: 10px 20px;
-  border-radius: 25px;
-  font-weight: bold;
-  font-size: 14px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 999;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* adds premium depth */
-}
-    body.dark-mode .copy-confirmation {
-  background-color: var(--gold);  /* Darker background in dark mode */
-  color: #000;                    /* White text in dark mode */
-}
-
-.copy-confirmation.show {
-  opacity: 1;
-}
-  </style>
-</head>
-<body>
-
-  
-<div class="content">
-  <div class="toggle">
-    <input type="checkbox" id="darkModeSwitch">
-    <label for="darkModeSwitch">🌙 Toggle Dark Mode</label>
-  </div>
-
-  <h1>VIP Vault Hashtag Copier</h1>
-  <div id="buttons"></div>
-</div>
-
-   <div id="copy-confirmation" class="copy-confirmation">Copied !</div>
-
-  <script>
-    const hashtags = {
-      "Monday 1": "#EastCoastVibes #NYCStyle #BaddieEnergy #InstaModel #OnlyFansBabe #USAGirls #DailyInspo #SlayAllDay #ViralReels #GlowUp",
-      "Tuesday 1": "#MiamiHeat #BossBabeVibes #USABaddies #InstaFashion #CurvyAndConfident #SlayTheGram #ReelItIn #AmericanBeauty #ThirstTrapQueen #ModelMood",
-      "Wednesday 1": "#EastCoastGlow #NYCBaddie #HotGirlVibes #IGModelSearch #USAExplorePage #FitAndFine #ViralBabe #ContentQueen #SunkissedVibes #OnlyFansLife",
-      "Thursday 1": "#BaddieOfTheDay #EastCoastModel #GlamVibesOnly #InstaGlowUp #ExploreUSA #FlawlessFeed #SpicyContent #SassyAndStylish #ReelGoals #USAttraction",
-      "Friday 1": "#NewYorkMinute #IGGoddess #ModelVibes #HotBabeEnergy #ContentCreationQueen #ReelReady #BaddieAlert #GlowModeOn #OnlyFansExclusive #AmericanDreamGirl",
-      "Saturday 1": "#SlayDaily #EastCoastFeels #USABaddieVibes #FierceAndFlawless #ViralWithStyle #GlamReels #HotAndConfident #InstaChic #CurvyGoddess #ExploreTheGram",
-      "Sunday 1": "#BaddieVibesOnly #NYCInspo #GlowQueen #USABabeEnergy #InstaItGirl #SeducingTheFeed #ModelOnAMission #ViralAndThriving #DailySlayMode #EastCoastMagic",
-      "Monday 2": "#NYCStyle #OnlyFansBabe #ViralReels #BaddieEnergy #GlowUp #SlayAllDay #EastCoastVibes #DailyInspo #USAGirls #InstaModel",
-      "Tuesday 2": "#USABaddies #CurvyAndConfident #ModelMood #ThirstTrapQueen #ReelItIn #BossBabeVibes #AmericanBeauty #MiamiHeat #SlayTheGram #InstaFashion",
-      "Wednesday 2": "#FitAndFine #ViralBabe #OnlyFansLife #ContentQueen #USAExplorePage #HotGirlVibes #EastCoastGlow #SunkissedVibes #IGModelSearch #NYCBaddie",
-      "Thursday 2": "#ExploreUSA #InstaGlowUp #SassyAndStylish #GlamVibesOnly #SpicyContent #USAttraction #ReelGoals #EastCoastModel #BaddieOfTheDay #FlawlessFeed",
-      "Friday 2": "#NewYorkMinute #ModelVibes #OnlyFansExclusive #AmericanDreamGirl #IGGoddess #BaddieAlert #ContentCreationQueen #GlowModeOn #HotBabeEnergy #ReelReady",
-      "Saturday 2": "#FierceAndFlawless #HotAndConfident #EastCoastFeels #USABaddieVibes #ExploreTheGram #CurvyGoddess #InstaChic #ViralWithStyle #SlayDaily #GlamReels",
-      "Sunday 2": "#ModelOnAMission #SeducingTheFeed #NYCInspo #ViralAndThriving #USABabeEnergy #BaddieVibesOnly #DailySlayMode #EastCoastMagic #GlowQueen #InstaItGirl"
-    };
-
-    function copyHashtags(key) {
-      const text = hashtags[key];
-      navigator.clipboard.writeText(text).then(() => {
-        const confirmation = document.getElementById('copy-confirmation');
-        confirmation.classList.add('show');
-        setTimeout(() => {
-          confirmation.classList.remove('show');
-        }, 1000);
-      }).catch(() => {
-        console.error('❌ Failed to copy hashtags.');
+        const btn = document.createElement('button');
+        btn.innerText = buttonLabel.trim();
+        btn.onclick = () => copyHashtags(hashtags.trim());
+        document.getElementById('buttons').appendChild(btn);
       });
-    }
-
-    for (const key in hashtags) {
-      const btn = document.createElement('button');
-      btn.innerText = key;
-      btn.onclick = () => copyHashtags(key);
-      document.getElementById('buttons').appendChild(btn);
-    }
-
-    // Dark mode toggle
-    const toggle = document.getElementById('darkModeSwitch');
-    toggle.addEventListener('change', () => {
-      document.body.classList.toggle('dark-mode');
     });
-  </script>
-</body>
-</html>
+
+  // Copy hashtags to clipboard
+  function copyHashtags(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      const confirmation = document.getElementById('copy-confirmation');
+      confirmation.classList.add('show');
+      setTimeout(() => confirmation.classList.remove('show'), 1000);
+    }).catch(() => {
+      console.error('❌ Failed to copy hashtags.');
+    });
+  }
+
+  // Dark mode toggle
+  const toggle = document.getElementById('darkModeSwitch');
+  toggle.addEventListener('change', () => {
+    document.body.classList.toggle('dark-mode');
+  });
+</script>
