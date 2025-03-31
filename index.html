@@ -27,6 +27,30 @@
     color: var(--text-light);
     transition: background-color 0.3s ease, color 0.3s ease;
   }
+.toggle {
+  background-color: var(--gold);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+.toggle input {
+  display: none;
+}
+.toggle label {
+  cursor: pointer;
+  color: #000;
+  display: block;
+  text-align: center;
+}
+.dark-mode .toggle {
+  background-color: #333;
+}
+.dark-mode .toggle label {
+  color: var(--gold);
+}
 
   body.dark-mode {
     background-color: var(--bg-dark);
@@ -34,11 +58,12 @@
   }
 
   #button-container {
-    margin-top: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+     display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  padding: 10px 20px;
+  max-width: 400px;
+  margin-top: 30px;
   }
 
   button {
@@ -107,7 +132,10 @@
   <div id="copy-confirmation" class="copy-confirmation">Copied!</div>
 
   <!-- Dark mode toggle (optional) -->
-  <input type="checkbox" id="darkModeSwitch" />
+  <div class="toggle">
+  <input type="checkbox" id="darkModeSwitch">
+  <label for="darkModeSwitch">🌙 Toggle Dark Mode</label>
+</div>
 
   <script>
     const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSIuRTn83dsU6mrRKryupDMXXgV7fkOKncvgrRyO3Pzqoon3OgAHaA7xL7tb7t3LpFCoFcMzmSAIxB9/pub?output=csv";
