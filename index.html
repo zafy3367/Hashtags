@@ -76,8 +76,8 @@
   #button-container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  padding: 10px 20px;
+  align-items: center;
+  gap: 10px;
   margin-top: 30px;
 }
 
@@ -156,35 +156,40 @@
   const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSIuRTn83dsU6mrRKryupDMXXgV7fkOKncvgrRyO3Pzqoon3OgAHaA7xL7tb7t3LpFCoFcMzmSAIxB9/pub?output=csv";
 
   fetch(sheetURL)
-    .then(response => response.text())
-    .then(data => {
-      const rows = data.trim().split(/\r?\n/).slice(1);
+  .then(response => response.text())
+  .then(data => {
+    const rows = data.trim().split(/\r?\n/).slice(1); // Skip header
 
-      rows.forEach(row => {
-        const [label1, hashtags1, label2, hashtags2] = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); // smart CSV splitter
-        const rowDiv = document.createElement('div');
-        rowDiv.className = 'row';
+    for (let i = 0; i < rows.length; i += 2) {
+      const rowDiv = document.createElement('div');
+      rowDiv.className = 'row';
 
-        if (label1 && hashtags1) {
-          const btn1 = document.createElement('button');
-          btn1.innerText = label1.trim();
-          btn1.onclick = () => copyHashtags(hashtags1.trim());
-          rowDiv.appendChild(btn1);
-        }
+      // Left column
+      const [label1, hashtags1] = rows[i].split(/,(.+)/);
+      if (label1 && hashtags1) {
+        const btn1 = document.createElement('button');
+        btn1.innerText = label1.trim();
+        btn1.onclick = () => copyHashtags(hashtags1.trim());
+        rowDiv.appendChild(btn1);
+      }
 
+      // Right column (only if it exists)
+      if (rows[i + 1]) {
+        const [label2, hashtags2] = rows[i + 1].split(/,(.+)/);
         if (label2 && hashtags2) {
           const btn2 = document.createElement('button');
           btn2.innerText = label2.trim();
           btn2.onclick = () => copyHashtags(hashtags2.trim());
           rowDiv.appendChild(btn2);
         }
+      }
 
-        document.getElementById('button-container').appendChild(rowDiv);
-      });
-    })
-    .catch(err => {
-      console.error("Failed to load CSV:", err);
-    });
+      document.getElementById('button-container').appendChild(rowDiv);
+    }
+  })
+  .catch(err => {
+    console.error("Failed to load CSV:", err);
+  });
 
   function copyHashtags(text) {
     navigator.clipboard.writeText(text).then(() => {
