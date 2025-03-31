@@ -3,6 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>VIP Hashtag Copier</title>
+
+  <!-- iOS Web App Support -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VIP Vault">
+<link rel="apple-touch-icon" href="icon.jpg">
+
 <style>
   :root {
     --bg-light: #f5f5f5;
@@ -150,38 +157,42 @@
     const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSIuRTn83dsU6mrRKryupDMXXgV7fkOKncvgrRyO3Pzqoon3OgAHaA7xL7tb7t3LpFCoFcMzmSAIxB9/pub?output=csv";
 
     fetch(sheetURL)
-      .then(response => response.text())
-      .then(data => {
-        const rows = data.trim().split(/\r?\n/).slice(1);
-        rows.forEach(row => {
-          const cols = row.split(',');
-  if (cols.length < 4) return;
+  .then(response => response.text())
+  .then(data => {
+    const rows = data.trim().split(/\r?\n/).slice(1);
+    const leftCol = [];
+    const rightCol = [];
 
-  const label1 = cols[0].trim();
-  const hashtags1 = cols[1].trim();
-  const label2 = cols[2].trim();
-  const hashtags2 = cols[3].trim();
+    rows.forEach((row, index) => {
+      const [label, hashtags] = row.split(/,(.+)/);
+      if (!label || !hashtags) return;
 
-  const rowDiv = document.createElement('div');
-  rowDiv.className = 'row';
+      const btn = document.createElement('button');
+      btn.innerText = label.trim();
+      btn.onclick = () => copyHashtags(hashtags.trim());
 
-  const btn1 = document.createElement('button');
-  btn1.innerText = label1;
-  btn1.onclick = () => copyHashtags(hashtags1);
+      if (index % 2 === 0) {
+        leftCol.push(btn);
+      } else {
+        rightCol.push(btn);
+      }
+    });
 
-  const btn2 = document.createElement('button');
-  btn2.innerText = label2;
-  btn2.onclick = () => copyHashtags(hashtags2);
+    const maxRows = Math.max(leftCol.length, rightCol.length);
+    for (let i = 0; i < maxRows; i++) {
+      const rowDiv = document.createElement('div');
+      rowDiv.className = 'row';
 
-  rowDiv.appendChild(btn1);
-  rowDiv.appendChild(btn2);
+      if (leftCol[i]) rowDiv.appendChild(leftCol[i]);
+      if (rightCol[i]) rowDiv.appendChild(rightCol[i]);
 
-  document.getElementById('button-container').appendChild(rowDiv);
-});
-      })
-      .catch(err => {
-        console.error("Failed to load CSV:", err);
-      });
+      document.getElementById('button-container').appendChild(rowDiv);
+    }
+  })
+  .catch(err => {
+    console.error("Failed to load CSV:", err);
+  });
+
 
     function copyHashtags(text) {
       navigator.clipboard.writeText(text).then(() => {
